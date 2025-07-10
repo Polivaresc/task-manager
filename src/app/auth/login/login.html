@@ -1,0 +1,9 @@
+
+<form action="" [formGroup]="loginForm">
+<label>
+    Username:
+    <input type="text" id="username" formControlName="username">
+</label>
+</form>
+
+<p>{{ username?.value }}</p>
