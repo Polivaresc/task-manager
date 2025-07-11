@@ -1,5 +1,5 @@
-<div class="min-h-screen flex flex-wrap items-center justify-center">
-    <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmit()" 
+<div class="flex flex-wrap items-center justify-center">
+    <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmit()"
     class="space-y-8 max-w-sm">
 
     <h2 class="font-bold text-2xl">Login</h2>
@@ -7,16 +7,26 @@
     <fieldset class="space-x-4">
         <label for="username">Username</label>
         <input type="text" id="username" formControlName="username" required
-        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full">
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full"
+        title="Username required">
+        
+        @if ( username?.invalid && username?.touched) {
+            <div class="text-rose-400">Username is required</div>
+        }
     </fieldset>
 
     <fieldset class="space-x-4">
         <label for="password">Password</label>
         <input type="password" id="password" formControlName="password" required
-        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full">
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full"
+        title="Password required">
+        
+        @if ( password?.invalid && password?.touched ) {
+            <div class="text-rose-400">Password is required</div>
+        }
     </fieldset>
 
-    <button type="submit" class="bg-cyan-300 hover:bg-cyan-400 hover:cursor-pointer px-3 py-2 w-full">Access</button>
+    <button type="submit" class="font-bold bg-cyan-300 hover:bg-cyan-400 hover:cursor-pointer disabled:bg-cyan-200 disabled:text-gray-500 disabled:cursor-not-allowed px-3 py-2 w-full" [disabled]="loginForm.invalid">Access</button>
 </form>
 
 </div>

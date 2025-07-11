@@ -1,0 +1,14 @@
+<div class="px-3 py-3">
+    <h1 class="text-3xl font-semibold">{{ title }}</h1>
+    <nav>
+        @if ( isLoggedIn ) {
+            <a routerLink="/dashboard">Dashboard</a>
+            <a routerLink="/login" (click)="onLogout()">Logout</a>
+        }
+
+        @else {
+            <a routerLink="/login">Login</a>
+        }
+        
+    </nav>
+</div>

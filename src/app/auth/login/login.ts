@@ -27,7 +27,11 @@ export class Login {
     return this.loginForm.get('username');
   }
 
-  onSubmit() {
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  onSubmit(): void {
     if (this.loginForm.invalid) return;
 
     const { username, password } = this.loginForm.value;
@@ -39,7 +43,7 @@ export class Login {
     }
   }
 
-  showLoginError() {
+  showLoginError(): void {
     console.log("error");
   }
 
