@@ -1,9 +1,23 @@
+<div class="min-h-screen flex flex-wrap items-center justify-center">
+    <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmit()" 
+    class="space-y-8 max-w-sm">
 
-<form action="" [formGroup]="loginForm">
-<label>
-    Username:
-    <input type="text" id="username" formControlName="username">
-</label>
+    <h2 class="font-bold text-2xl">Login</h2>
+
+    <fieldset class="space-x-4">
+        <label for="username">Username</label>
+        <input type="text" id="username" formControlName="username" required
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full">
+    </fieldset>
+
+    <fieldset class="space-x-4">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" required
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full">
+    </fieldset>
+
+    <button type="submit" class="bg-cyan-300 hover:bg-cyan-400 hover:cursor-pointer px-3 py-2 w-full">Access</button>
 </form>
 
-<p>{{ username?.value }}</p>
+</div>
+

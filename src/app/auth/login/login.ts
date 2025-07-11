@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,9 @@ export class Login {
   loginForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private auth: Auth,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -25,7 +28,19 @@ export class Login {
   }
 
   onSubmit() {
-    
+    if (this.loginForm.invalid) return;
+
+    const { username, password } = this.loginForm.value;
+
+    if (this.auth.login(username, password)) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.showLoginError();
+    }
+  }
+
+  showLoginError() {
+    console.log("error");
   }
 
 }
