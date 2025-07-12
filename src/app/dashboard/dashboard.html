@@ -1,1 +1,10 @@
-<p>dashboard works!</p>
+
+<h2>Welcome, {{ username }}!</h2>
+
+<div class="h-96">
+    <canvas baseChart
+        [type]="'pie'"
+        [data]="pieChartData"
+        [options]="pieChartOptions">
+    </canvas>
+</div>

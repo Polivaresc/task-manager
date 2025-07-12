@@ -13,6 +13,7 @@ export class Auth {
   login(username: string, password: string): boolean {
     if (username === this.validUsername && password === this.validPassword) {
       localStorage.setItem('token', 'admin-token');
+      localStorage.setItem('username', username);
       return true;
     }
     if (username !== this.validUsername) {
@@ -26,6 +27,7 @@ export class Auth {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
   }
 
 }

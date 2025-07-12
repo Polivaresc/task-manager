@@ -1,14 +1,13 @@
 <div class="mb-10">
     <h1 class="text-3xl font-semibold">{{ title }}</h1>
-    <nav>
+    <nav class="space-x-6 mt-4">
         @if ( isLoggedIn ) {
             <a routerLink="/dashboard">Dashboard</a>
+            <a routerLink="/tasks">Tasks</a>
             <a routerLink="/" (click)="onLogout()">Logout</a>
         }
-
         @else {
             <a routerLink="/login">Login</a>
         }
-        
     </nav>
 </div>
