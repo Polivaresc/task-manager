@@ -1,5 +1,5 @@
 <div class="flex flex-wrap items-center justify-center">
-    <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
     class="space-y-8 max-w-sm">
 
     <h2 class="font-bold text-2xl">Login</h2>
@@ -25,6 +25,10 @@
             <div class="text-rose-400">Password is required</div>
         }
     </fieldset>
+
+    @if ( loginError ) {
+        <div class="text-rose-400">{{ loginError }}</div>
+    }
 
     <button type="submit" class="font-bold bg-cyan-300 hover:bg-cyan-400 hover:cursor-pointer disabled:bg-cyan-200 disabled:text-gray-500 disabled:cursor-not-allowed px-3 py-2 w-full" [disabled]="loginForm.invalid">Access</button>
 </form>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Auth } from '../auth/auth';
 
 @Component({
@@ -13,15 +13,26 @@ export class Navbar {
 
   isLoggedIn: boolean = false;
 
-  constructor (private auth: Auth) {}
+  constructor (private auth: Auth, private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.checkLoginStatus();
+      }
+    })
+  }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    this.isLoggedIn = !!token;
+    this.checkLoginStatus();
   }
 
   onLogout(): void {
     this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+
+  checkLoginStatus() {
+    const token = localStorage.getItem('token');
+    this.isLoggedIn = !!token;
   }
 
 }

@@ -7,18 +7,25 @@ export class Auth {
   private readonly validUsername = 'admin';
   private readonly validPassword = '1234';
 
+  incorrectUsername: boolean = false;
+  incorrectPassword: boolean = false;
+
   login(username: string, password: string): boolean {
     if (username === this.validUsername && password === this.validPassword) {
       localStorage.setItem('token', 'admin-token');
-      location.reload();
       return true;
+    }
+    if (username !== this.validUsername) {
+      this.incorrectUsername = true;
+    }
+    if (password !== this.validPassword) {
+      this.incorrectPassword = true;
     }
     return false;
   }
 
   logout(): void {
     localStorage.removeItem('token');
-    location.reload();
   }
 
 }

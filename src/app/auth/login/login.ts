@@ -31,20 +31,19 @@ export class Login {
     return this.loginForm.get('password');
   }
 
+  loginError: string | null = null;
+
   onSubmit(): void {
     if (this.loginForm.invalid) return;
 
     const { username, password } = this.loginForm.value;
 
     if (this.auth.login(username, password)) {
+      this.loginError = null;
       this.router.navigate(['/dashboard']);
     } else {
-      this.showLoginError();
+      this.loginError = 'Incorrect user or password';
     }
-  }
-
-  showLoginError(): void {
-    console.log("error");
   }
 
 }
