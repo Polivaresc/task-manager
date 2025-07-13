@@ -4,7 +4,7 @@
 
             <div class="flex justify-between">
                 <div class="text-cyan-500">#{{ task.id }}</div>
-                <button class="hover:cursor-pointer">
+                <button class="hover:cursor-pointer" (click)="confirmDelete(task)">
                     <i class="fa-solid fa-xmark hover:text-rose-400"></i>
                 </button>
             </div>
@@ -12,11 +12,40 @@
             <div>
                 <h3 class="text-xl font-semibold">{{ task.title }}</h3>
                 <p>{{ task.description }}</p>
-                <div>Deadline: <span>{{ task.deadline | date: 'fullDate' }}</span></div>
-                <div>Priority: <span>{{ task.priority }}</span></div>
-                <div>Status: <span>{{ task.status }}</span></div>
-            </div>
 
+                <fieldset>
+                    <label for="deadline" class="mr-2">Deadline:</label>
+                    <input type="date" id="date" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                        [ngModel]="task.deadline | date: 'yyyy-MM-dd'" 
+                        #taskDeadline="ngModel"
+                        (ngModelChange)="updateDeadline(task, $event)">
+                </fieldset>
+
+                <fieldset>
+                    <label for="priority" class="mr-2">Priority:</label>
+                    <select id="priority" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                        [ngModel]="task.priority"
+                        #taskPriority="ngModel"
+                        (ngModelChange)="updatePriority(task, $event)">
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                        <option value="urgent">Urgent</option>
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <label for="status" class="mr-2">Status:</label>
+                    <select id="status" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                        [ngModel]="task.status"
+                        #taskStatus="ngModel"
+                        (ngModelChange)="updateStatus(task, $event)">
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In-progress</option>
+                        <option value="done">Done</option>
+                    </select>
+                </fieldset>
+                
+            </div>
         </div>
     }
 </div>

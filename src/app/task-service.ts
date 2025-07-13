@@ -21,8 +21,29 @@ export class TaskService {
       );
   }
 
+  getTask(id: number): Observable<Task> {
+    const url = `${this.tasksUrl}/${id}`;
+    return this.http.get<Task>(url)
+      .pipe(catchError(this.handleError<Task>('getTask')));
+  }
 
-  handleError<T> (operation = 'operation', result?: T) {
+  updateTask(task: Task): Observable<any> {
+    return this.http.put(this.tasksUrl, task, this.httpOptions)
+      .pipe(catchError(this.handleError<any>('updateTask')));
+  }
+
+  addTask(task: Task): Observable<Task> {
+    return this.http.post<Task>(this.tasksUrl, task, this.httpOptions)
+      .pipe(catchError(this.handleError<Task>('addTask')));
+  }
+
+  deleteTask(id: number): Observable<Task> {
+    const url = `${this.tasksUrl}/${id}`;
+    return this.http.delete<Task>(url, this.httpOptions)
+      .pipe(catchError(this.handleError<Task>('deleteTask')));
+  }
+
+  private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       return of(result as T);
     }
