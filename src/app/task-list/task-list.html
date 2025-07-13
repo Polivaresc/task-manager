@@ -1,7 +1,22 @@
-<div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     @for (task of tasks; track task.id) {
-        <div>
-            {{ task.title }}
+        <div class="bg-white shadow-md p-4">
+
+            <div class="flex justify-between">
+                <div class="text-cyan-500">#{{ task.id }}</div>
+                <button class="hover:cursor-pointer">
+                    <i class="fa-solid fa-xmark hover:text-rose-400"></i>
+                </button>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold">{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <div>Deadline: <span>{{ task.deadline | date: 'fullDate' }}</span></div>
+                <div>Priority: <span>{{ task.priority }}</span></div>
+                <div>Status: <span>{{ task.status }}</span></div>
+            </div>
+
         </div>
     }
 </div>
