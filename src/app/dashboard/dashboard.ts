@@ -12,7 +12,7 @@ export class Dashboard {
   username: string | null = localStorage.getItem('username');
 
   pieChartData: ChartConfiguration<'pie'>['data'] = {
-    labels: ['Completed', 'In process', 'To Do'],
+    labels: ['Pending', 'In progress', 'Done'],
     datasets: [{
       data: [23, 55, 10]
     }]
