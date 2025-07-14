@@ -1,10 +1,33 @@
-
+<div class="space-y-6">
 <h2>Welcome, {{ username }}!</h2>
 
-<div class="h-96">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="bg-white shadow-md min-h-40 flex flex-col gap-4 items-center justify-center">
+        <div class="text-xl font-semibold text-center">Urgent tasks</div>
+        <div class="text-3xl font-semibold text-center text-cyan-400">{{ urgentTasks }}</div>
+    </div>
+    <div class="bg-white shadow-md min-h-40 flex flex-col gap-4 items-center justify-center">
+        <div class="text-xl font-semibold text-center">Completed tasks</div>
+        <div class="text-3xl font-semibold text-center text-cyan-400">{{ highTasks }}</div>
+    </div>
+</div>
+
+<div class="bg-white shadow-md">
+    <div>
     <canvas baseChart
         [type]="'pie'"
         [data]="pieChartData"
         [options]="pieChartOptions">
     </canvas>
+    </div>
+
+    <div>
+        <canvas baseChart
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="'line'">
+        </canvas>
+    </div>
+</div>
+
 </div>
