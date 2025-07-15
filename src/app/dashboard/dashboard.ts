@@ -3,10 +3,11 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { Priority, Status, Task } from '../task';
 import { TaskService } from '../task-service';
+import { DashboardCard } from "./dashboard-card/dashboard-card";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NgChartsModule],
+  imports: [NgChartsModule, DashboardCard],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -24,11 +25,13 @@ export class Dashboard {
   };
 
   tasksByStatus(status: Status): number {
-    const tasksByStatus: Task[] | undefined = this.tasks.filter(task => task.status === status);
-    if (tasksByStatus === undefined) {
-      return 0;
-    }
+    const tasksByStatus: Task[] = this.tasks.filter(task => task.status === status);
     return tasksByStatus.length;
+  }
+
+  tasksByPriority(priority: Priority): number {
+    const tasksByPriority: Task[] = this.tasks.filter(task => task.priority === priority);
+    return tasksByPriority.length;
   }
 
   get pendingTasks(): number {
@@ -43,14 +46,6 @@ export class Dashboard {
     return this.tasksByStatus('in-progress');
   }
 
-  tasksByPriority(priority: Priority): number {
-    const tasksByPriority: Task[] | undefined = this.tasks.filter(task => task.priority === priority);
-    if (tasksByPriority === undefined) {
-      return 0;
-    }
-    return tasksByPriority.length;
-  }
-
   get mediumTasks(): number {
     return this.tasksByPriority('medium');
   }
@@ -63,19 +58,25 @@ export class Dashboard {
     return this.tasksByPriority('urgent');
   }
 
+  get overdueTasks(): number {
+    const now = new Date();
+    const overdueTasks = this.tasks.filter(
+      task => task.status !== 'done' && new Date(task.deadline) < now
+    );
+    return overdueTasks.length;
+  }
+
   pieChartData!: ChartConfiguration<'pie'>['data'];
   pieChartOptions: ChartOptions<'pie'> = {
-    responsive: true,
-    plugins: {
-      title: { display: true, text: 'Tasks by status'}
-    }
+    responsive: true
   };
 
   getPieChartData() {
     this.pieChartData = {
     labels: ['Pending', 'In progress', 'Done'],
     datasets: [{
-      data: [this.pendingTasks, this.inProgressTasks, this.completedTasks]
+      data: [this.pendingTasks, this.inProgressTasks, this.completedTasks],
+      backgroundColor: ['#fea6d6' , '#a3b3ff', '#6be4d1']
     }]
     };
   }
@@ -87,10 +88,6 @@ export class Dashboard {
       legend: { 
         display: true, 
         position: 'top'
-      },
-      title: { 
-        display: true, 
-        text: 'Tasks by deadline'
       }
     },
     scales: {
@@ -113,7 +110,7 @@ export class Dashboard {
     }
 
     const sortedDates = Object.keys(tasksByDate).sort(
-      (a, b) => new Date(a).getDate() - new Date(b).getDate()
+      (a, b) => new Date(a).getTime() - new Date(b).getTime()
     );
 
     this.lineChartData = {
@@ -121,8 +118,10 @@ export class Dashboard {
       datasets: [{
         label: 'Tasks',
         data: sortedDates.map(date => tasksByDate[date]),
-        borderColor: 'cyan',
-        fill: false,
+        backgroundColor: '#53eafd',
+        borderColor: '#53eafd',
+        pointBackgroundColor: '#fea6d6',
+        pointBorderColor: '#fea6d6',
         tension: 0.4
       }]
     }
