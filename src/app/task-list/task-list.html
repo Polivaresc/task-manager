@@ -1,6 +1,8 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    @for (task of tasks; track task.id) {
-        <div class="bg-white shadow-md p-4">
+<app-add-task (newTask)="createTask($event)"></app-add-task>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
+    @for (task of unfinishedTasks; track task.id) {
+        <div class="bg-white shadow-md p-8">
 
             <div class="flex justify-between">
                 <div class="text-cyan-500">#{{ task.id }}</div>
@@ -9,21 +11,38 @@
                 </button>
             </div>
 
-            <div>
-                <h3 class="text-xl font-semibold">{{ task.title }}</h3>
-                <p>{{ task.description }}</p>
+            <div class="flex flex-col gap-4 items-center justify-center">
+                <div class="min-w-64">
+
+                <h3 class="text-xl font-semibold mb-2">{{ task.title }}</h3>
+
+                <div class="flex items-start gap-2">
+                <button (click)="toggleDescription(task.id)" class="hover:text-cyan-500 hover:cursor-pointer transition-all duration-300 ease-in-out">
+                    @if ( isExpanded(task.id) ) {
+                        <i class="fa-solid fa-square-minus"></i>
+                    } 
+                    @else {
+                        <i class="fa-solid fa-square-plus"></i>
+                    }
+                </button>
+
+                @if ( isExpanded(task.id) ) {
+                <textarea [ngModel]="task.description" #taskDescription="ngModel" (ngModelChange)="updateDescription(task, $event)" class="w-full" placeholder="Add a description"></textarea>
+
+                }
+                </div>
 
                 <fieldset>
-                    <label for="deadline" class="mr-2">Deadline:</label>
-                    <input type="date" id="date" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                    <label for="deadline-{{task.id}}" class="mr-2 font-medium">Deadline:</label>
+                    <input type="date" id="deadline-{{task.id}}" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
                         [ngModel]="task.deadline | date: 'yyyy-MM-dd'" 
                         #taskDeadline="ngModel"
                         (ngModelChange)="updateDeadline(task, $event)">
                 </fieldset>
 
                 <fieldset>
-                    <label for="priority" class="mr-2">Priority:</label>
-                    <select id="priority" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                    <label for="priority-{{task.id}}" class="mr-2 font-medium">Priority:</label>
+                    <select id="priority-{{task.id}}" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
                         [ngModel]="task.priority"
                         #taskPriority="ngModel"
                         (ngModelChange)="updatePriority(task, $event)">
@@ -34,8 +53,8 @@
                 </fieldset>
 
                 <fieldset>
-                    <label for="status" class="mr-2">Status:</label>
-                    <select id="status" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                    <label for="status-{{task.id}}" class="mr-2 font-medium">Status:</label>
+                    <select id="status-{{task.id}}" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
                         [ngModel]="task.status"
                         #taskStatus="ngModel"
                         (ngModelChange)="updateStatus(task, $event)">
@@ -44,8 +63,57 @@
                         <option value="done">Done</option>
                     </select>
                 </fieldset>
+                </div>
                 
             </div>
         </div>
     }
 </div>
+
+
+@if (finishedTasks.length > 0) {
+<h2 class="text-2xl font-semibold my-4">
+    Done Tasks
+    <i class="fa-solid fa-check"></i>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-500">
+    @for (task of finishedTasks; track task.id) {
+        <div class="bg-white shadow-md p-8">
+
+            <div class="flex justify-between">
+                <div>#{{ task.id }}</div>
+                <button class="hover:cursor-pointer" (click)="confirmDelete(task)">
+                    <i class="fa-solid fa-xmark hover:text-rose-400 transition-all duration-300 ease-in-out"></i>
+                </button>
+            </div>
+
+            <div class="flex flex-col gap-4 items-center justify-center">
+                <div class="min-w-64">
+
+                <h3 class="text-xl font-semibold mb-2">{{ task.title }}</h3>
+
+                <div class="space-y-2">
+                    @if (task.description) {
+                    <p>Description: {{ task.description }}</p>
+                    }
+                    <p>Deadline: {{ task.deadline | date: 'yyyy-MM-dd'}}</p>
+                    <p>Priority: {{ task.priority }}</p>
+                    <fieldset>
+                    <label for="done-status-{{task.id}}" class="mr-2 font-medium">Status:</label>
+                    <select id="done-status-{{task.id}}" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                        [ngModel]="task.status"
+                        #taskStatus="ngModel"
+                        (ngModelChange)="updateStatus(task, $event)">
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In-progress</option>
+                        <option value="done">Done</option>
+                    </select>
+                    </fieldset>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+}
