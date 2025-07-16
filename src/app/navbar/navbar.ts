@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Auth } from '../auth/auth';
 
 @Component({
@@ -13,12 +13,16 @@ export class Navbar {
 
   isLoggedIn: boolean = false;
 
-  constructor (private auth: Auth, private router: Router) {
+  constructor (private auth: Auth, private router: Router, private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.checkLoginStatus();
       }
     })
+  }
+
+  get currentRoute() {
+    return this.activatedRoute;
   }
 
   ngOnInit(): void {

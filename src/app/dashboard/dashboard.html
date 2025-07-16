@@ -13,8 +13,8 @@
 
 </div>
 
-<div class="flex flex-wrap gap-4 justify-between">
-<div class="bg-white shadow-md w-full md:w-[600px] lg:w-[700px] h-[400px] flex flex-col items-center justify-center py-3">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div class="bg-white shadow-md w-full h-[500px] flex flex-col items-center justify-center">
     <div>
     <h3 class="text-xl font-semibold text-center mb-3">Tasks by status</h3>
     <canvas baseChart
@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div class="bg-white shadow-md w-full md:w-[600px] lg:w-[700px] h-[400px] flex flex-col items-center justify-center px-6">
+<div class="bg-white shadow-md w-full h-[500px] flex flex-col items-center justify-center px-6">
     <h3 class="text-xl font-semibold text-center mb-3">Tasks by deadline</h3> 
     <canvas baseChart
         [data]="lineChartData"

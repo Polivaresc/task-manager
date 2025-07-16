@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-card',
-  imports: [NgClass],
+  imports: [],
   templateUrl: './dashboard-card.html',
   styleUrl: './dashboard-card.css'
 })
