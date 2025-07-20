@@ -66,14 +66,15 @@ export class Dashboard {
     return overdueTasks.length;
   }
 
-  get labelColor() {
-    return localStorage.getItem('dark-mode') ? '#f8fbfa' : '#1e2a3a';
-  }
+  labelColor: string = this.getLabelColor();
 
   get chartBorderColor() {
     return localStorage.getItem('dark-mode') ? '#f8fbfa' : '#1e2a3a';
   }
 
+  getLabelColor(): string {
+    return localStorage.getItem('dark-mode') ? '#f8fbfa' : '#1e2a3a';
+  }
 
   pieChartData!: ChartConfiguration<'pie'>['data'];
   pieChartOptions: ChartOptions<'pie'> = {
@@ -81,7 +82,7 @@ export class Dashboard {
     plugins: {
       legend: {
         labels: {
-          color: this.labelColor
+          color: this.getLabelColor()
         }
       }
     }
@@ -108,7 +109,7 @@ export class Dashboard {
         display: true, 
         position: 'top',
         labels: {
-          color: this.labelColor
+          color: this.getLabelColor()
         }
       }
     },
@@ -117,10 +118,10 @@ export class Dashboard {
         title: { 
           display: true, 
           text: 'Date',
-          color: this.labelColor
+          color: this.getLabelColor()
         },
         ticks: {
-          color: this.labelColor
+          color: this.getLabelColor()
         },
         grid: {
           color: '#6a7281'
@@ -130,10 +131,10 @@ export class Dashboard {
         title: { 
           display: true, 
           text: 'Tasks',
-          color: this.labelColor
+          color: this.getLabelColor()
         },
         ticks: {
-          color: this.labelColor
+          color: this.getLabelColor()
         },
         grid: {
           color: '#6a7281'

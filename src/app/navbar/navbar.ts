@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Auth } from '../auth/auth';
+import { Dashboard } from '../dashboard/dashboard';
 
 @Component({
   selector: 'app-navbar',
@@ -57,6 +58,7 @@ export class Navbar {
     }
 
     localStorage.setItem('dark-mode', this.darkMode.toString());
+
   }
 
 }
