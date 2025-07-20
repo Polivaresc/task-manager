@@ -12,6 +12,7 @@ export class Navbar {
   @Input() title?: string;
 
   isLoggedIn: boolean = false;
+  darkMode: boolean = false;
 
   constructor (private auth: Auth, private router: Router, private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe(event => {
@@ -27,6 +28,12 @@ export class Navbar {
 
   ngOnInit(): void {
     this.checkLoginStatus();
+
+    const prefersDarkMode = localStorage.getItem('dark-mode');
+    if (prefersDarkMode) {
+      this.darkMode = true;
+      document.documentElement.classList.add('dark');
+    }
   }
 
   onLogout(): void {
@@ -37,6 +44,19 @@ export class Navbar {
   checkLoginStatus() {
     const token = localStorage.getItem('token');
     this.isLoggedIn = !!token;
+  }
+
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
+
+    const html = document.documentElement;
+    if (this.darkMode) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+
+    localStorage.setItem('dark-mode', this.darkMode.toString());
   }
 
 }

@@ -9,5 +9,5 @@ import { Navbar } from './navbar/navbar';
   styleUrl: './app.css'
 })
 export class App {
-  protected title = 'task-manager';
+  protected title: string = 'task-manager';
 }

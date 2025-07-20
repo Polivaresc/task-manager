@@ -66,17 +66,36 @@ export class Dashboard {
     return overdueTasks.length;
   }
 
+  get labelColor() {
+    return localStorage.getItem('dark-mode') ? '#f8fbfa' : '#1e2a3a';
+  }
+
+  get chartBorderColor() {
+    return localStorage.getItem('dark-mode') ? '#f8fbfa' : '#1e2a3a';
+  }
+
+
   pieChartData!: ChartConfiguration<'pie'>['data'];
   pieChartOptions: ChartOptions<'pie'> = {
-    responsive: true
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: this.labelColor
+        }
+      }
+    }
   };
 
   getPieChartData() {
+    const chartColors = ['#fea6d6' , '#a3b3ff', '#6be4d1'];
+
     this.pieChartData = {
     labels: ['Pending', 'In progress', 'Done'],
     datasets: [{
       data: [this.pendingTasks, this.inProgressTasks, this.completedTasks],
-      backgroundColor: ['#fea6d6' , '#a3b3ff', '#6be4d1']
+      backgroundColor: chartColors,
+      borderColor: this.chartBorderColor
     }]
     };
   }
@@ -87,15 +106,38 @@ export class Dashboard {
     plugins: {
       legend: { 
         display: true, 
-        position: 'top'
+        position: 'top',
+        labels: {
+          color: this.labelColor
+        }
       }
     },
     scales: {
       x: {
-        title: { display: true, text: 'Date'}
+        title: { 
+          display: true, 
+          text: 'Date',
+          color: this.labelColor
+        },
+        ticks: {
+          color: this.labelColor
+        },
+        grid: {
+          color: '#6a7281'
+        }
       },
       y: {
-        title: { display: true, text: 'Tasks'},
+        title: { 
+          display: true, 
+          text: 'Tasks',
+          color: this.labelColor
+        },
+        ticks: {
+          color: this.labelColor
+        },
+        grid: {
+          color: '#6a7281'
+        },
         beginAtZero: true
       }
     }
