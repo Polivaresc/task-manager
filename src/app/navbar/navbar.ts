@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Auth } from '../auth/auth';
-import { Dashboard } from '../dashboard/dashboard';
+import { ThemeService } from '../theme-service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,28 +13,30 @@ export class Navbar {
   @Input() title?: string;
 
   isLoggedIn: boolean = false;
-  darkMode: boolean = false;
 
-  constructor (private auth: Auth, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor (
+    private auth: Auth, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private themeService: ThemeService
+  ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.checkLoginStatus();
       }
-    })
+    });
   }
 
   get currentRoute() {
     return this.activatedRoute;
   }
 
+  get isDarkMode() {
+    return this.themeService.isDarkMode();
+  }
+
   ngOnInit(): void {
     this.checkLoginStatus();
-
-    const prefersDarkMode = localStorage.getItem('dark-mode');
-    if (prefersDarkMode) {
-      this.darkMode = true;
-      document.documentElement.classList.add('dark');
-    }
   }
 
   onLogout(): void {
@@ -47,18 +49,7 @@ export class Navbar {
     this.isLoggedIn = !!token;
   }
 
-  toggleDarkMode() {
-    this.darkMode = !this.darkMode;
-
-    const html = document.documentElement;
-    if (this.darkMode) {
-      html.classList.add('dark');
-    } else {
-      html.classList.remove('dark');
-    }
-
-    localStorage.setItem('dark-mode', this.darkMode.toString());
-
+  toggleTheme() {
+    this.themeService.toggleDarkMode();
   }
-
 }

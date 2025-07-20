@@ -1,5 +1,5 @@
 @if (showForm) {
-    <button class="font-semibold bg-gray-300 hover:bg-gray-400 hover:cursor-pointer px-3 py-2 transition-all duration-300 ease-in-out"
+    <button class="font-semibold bg-gray-300 text-black hover:bg-gray-400 hover:cursor-pointer px-3 py-2 transition-all duration-300 ease-in-out"
     (click)="toggleForm()">
     Close form
     </button>
@@ -9,7 +9,7 @@
     <fieldset>
         <label for="newTitle">Title</label>
         <input type="text" id="newTitle" formControlName="title" required
-        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full"
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full dark:bg-gray-800"
         title="Title required">
         @if ( title?.invalid && title?.touched) {
             <div class="text-rose-400">Add a title to your task</div>
@@ -35,7 +35,7 @@
     <fieldset>
         <label for="newPriority">Priority</label>
         <select id="newPriority" formControlName="priority" required
-        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full"
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full dark:bg-gray-800"
         title="Priority required">
             <option value="medium" selected>Medium</option>
             <option value="high">High</option>
@@ -46,7 +46,7 @@
     <fieldset>
         <label for="newStatus">Status</label>
         <select id="newStatus" formControlName="status" required
-        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full"
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full dark:bg-gray-800"
         title="Status required">
             <option value="pending" selected>Pending</option>
             <option value="in-progress">In-progress</option>
@@ -54,14 +54,14 @@
         </select>
     </fieldset>
 
-    <button type="submit" class="font-semibold bg-cyan-300 hover:bg-cyan-400 hover:cursor-pointer px-3 py-2 transition-all duration-300 ease-in-out">
+    <button type="submit" class="font-semibold bg-cyan-300 text-black hover:bg-cyan-400 hover:cursor-pointer px-3 py-2 transition-all duration-300 ease-in-out">
         Add
     </button>
     </form>
 }
 
 @else {
-    <button class="font-semibold bg-cyan-300 hover:bg-cyan-400 hover:cursor-pointer px-3 py-2 transition-all duration-300 ease-in-out"
+    <button class="font-semibold bg-cyan-300 text-black hover:bg-cyan-400 hover:cursor-pointer px-3 py-2 transition-all duration-300 ease-in-out"
     (click)="toggleForm()">
     New Task
     </button> 

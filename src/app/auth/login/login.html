@@ -7,7 +7,7 @@
     <fieldset class="space-x-4">
         <label for="username">Username</label>
         <input type="text" id="username" formControlName="username" required
-        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full"
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full dark:bg-gray-800"
         title="Username required">
         
         @if ( username?.invalid && username?.touched) {
@@ -18,7 +18,7 @@
     <fieldset class="space-x-4">
         <label for="password">Password</label>
         <input type="password" id="password" formControlName="password" required
-        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full"
+        class="border border-gray-300 focus:outline-none focus:border-b-2 focus:border-b-cyan-300 px-3 py-2 w-full dark:bg-gray-800"
         title="Password required">
         
         @if ( password?.invalid && password?.touched ) {
@@ -30,7 +30,7 @@
         <div class="text-rose-400">{{ loginError }}</div>
     }
 
-    <button type="submit" class="font-semibold bg-cyan-300 hover:bg-cyan-400 hover:cursor-pointer disabled:bg-cyan-200 disabled:text-gray-500 disabled:cursor-not-allowed px-3 py-2 w-full transition-all duration-300 ease-in-out" [disabled]="loginForm.invalid">Access</button>
+    <button type="submit" class="font-semibold bg-cyan-300 text-black hover:bg-cyan-400 hover:cursor-pointer disabled:bg-cyan-200 disabled:text-gray-500 disabled:cursor-not-allowed px-3 py-2 w-full transition-all duration-300 ease-in-out" [disabled]="loginForm.invalid">Access</button>
 </form>
 
 </div>

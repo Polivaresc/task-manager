@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
+
 import { Priority, Status, Task } from '../task';
+
 import { TaskService } from '../task-service';
 import { DashboardCard } from "./dashboard-card/dashboard-card";
+import { ThemeService } from '../theme-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,13 +18,29 @@ export class Dashboard {
   username: string | null = localStorage.getItem('username');
   tasks: Task[] = [];
 
-  constructor(private taskService: TaskService) {
-    this.taskService.getTasks()
-      .subscribe(tasks => {
-        this.tasks = tasks
-        this.getPieChartData();
-        this.getLineChartData();
-      });
+  pieChartData!: ChartConfiguration<'pie'>['data'];
+  pieChartOptions: ChartOptions<'pie'> = {};
+
+  lineChartData!: ChartConfiguration<'line'>['data'];
+  lineChartOptions: ChartOptions<'line'> = {};
+  
+
+  constructor(
+    private taskService: TaskService,
+    private themeService: ThemeService
+  ) {
+    effect(() => {
+      console.log(this.themeService.darkMode())
+      this.taskService.getTasks()
+        .subscribe(tasks => {
+          this.tasks = tasks
+          this.getPieChartData();
+          this.getPieChartOptions();
+          this.getLineChartData();
+          this.getLineChatOptions();
+        }
+        );
+    });
   };
 
   tasksByStatus(status: Status): number {
@@ -66,83 +85,66 @@ export class Dashboard {
     return overdueTasks.length;
   }
 
-  labelColor: string = this.getLabelColor();
-
-  get chartBorderColor() {
-    return localStorage.getItem('dark-mode') ? '#f8fbfa' : '#1e2a3a';
-  }
-
-  getLabelColor(): string {
-    return localStorage.getItem('dark-mode') ? '#f8fbfa' : '#1e2a3a';
-  }
-
-  pieChartData!: ChartConfiguration<'pie'>['data'];
-  pieChartOptions: ChartOptions<'pie'> = {
-    responsive: true,
-    plugins: {
-      legend: {
-        labels: {
-          color: this.getLabelColor()
-        }
-      }
-    }
-  };
-
   getPieChartData() {
-    const chartColors = ['#fea6d6' , '#a3b3ff', '#6be4d1'];
-
     this.pieChartData = {
     labels: ['Pending', 'In progress', 'Done'],
     datasets: [{
       data: [this.pendingTasks, this.inProgressTasks, this.completedTasks],
-      backgroundColor: chartColors,
-      borderColor: this.chartBorderColor
+      backgroundColor: ['#fea6d6' , '#a3b3ff', '#6be4d1'],
     }]
     };
   }
 
-  lineChartData!: ChartConfiguration<'line'>['data'];
-  lineChartOptions: ChartOptions<'line'> = {
-    responsive: true,
-    plugins: {
-      legend: { 
-        display: true, 
-        position: 'top',
-        labels: {
-          color: this.getLabelColor()
-        }
-      }
-    },
-    scales: {
-      x: {
-        title: { 
-          display: true, 
-          text: 'Date',
-          color: this.getLabelColor()
-        },
-        ticks: {
-          color: this.getLabelColor()
-        },
-        grid: {
-          color: '#6a7281'
+  getPieChartOptions() {
+    this.pieChartOptions = {
+      responsive: true,
+      plugins: { legend: { labels: { color: this.themeService.chartLabelColor() } } }
+    }
+  }
+
+  getLineChatOptions() {
+    this.lineChartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            color: this.themeService.chartLabelColor()
+          }
         }
       },
-      y: {
-        title: { 
-          display: true, 
-          text: 'Tasks',
-          color: this.getLabelColor()
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date',
+            color: this.themeService.chartLabelColor()
+          },
+          ticks: {
+            color: this.themeService.chartLabelColor()
+          },
+          grid: {
+            color: this.themeService.chartBorderColor()
+          }
         },
-        ticks: {
-          color: this.getLabelColor()
-        },
-        grid: {
-          color: '#6a7281'
-        },
-        beginAtZero: true
+        y: {
+          title: {
+            display: true,
+            text: 'Tasks',
+            color: this.themeService.chartLabelColor()
+          },
+          ticks: {
+            color: this.themeService.chartLabelColor()
+          },
+          grid: {
+            color: this.themeService.chartBorderColor()
+          },
+          beginAtZero: true
+        }
       }
     }
-  };
+  }
 
   getLineChartData() {
     const tasksByDate: { [date: string]: number } = {};
@@ -169,6 +171,4 @@ export class Dashboard {
       }]
     }
   }
-
-
 }

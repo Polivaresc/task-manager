@@ -2,10 +2,10 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
     @for (task of unfinishedTasks; track task.id) {
-        <div class="bg-white shadow-md p-8">
+        <div class="bg-white dark:bg-gray-700 shadow-md p-8">
 
             <div class="flex justify-between">
-                <div class="text-cyan-500">#{{ task.id }}</div>
+                <div class="text-cyan-500 dark:text-cyan-300">#{{ task.id }}</div>
                 <button class="hover:cursor-pointer" (click)="confirmDelete(task)">
                     <i class="fa-solid fa-xmark hover:text-rose-400 transition-all duration-300 ease-in-out"></i>
                 </button>
@@ -34,7 +34,7 @@
 
                 <fieldset>
                     <label for="deadline-{{task.id}}" class="mr-2 font-medium">Deadline:</label>
-                    <input type="date" id="deadline-{{task.id}}" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                    <input type="date" id="deadline-{{task.id}}" class="border-2 border-white dark:border-gray-700 focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
                         [ngModel]="task.deadline | date: 'yyyy-MM-dd'" 
                         #taskDeadline="ngModel"
                         (ngModelChange)="updateDeadline(task, $event)">
@@ -42,7 +42,7 @@
 
                 <fieldset>
                     <label for="priority-{{task.id}}" class="mr-2 font-medium">Priority:</label>
-                    <select id="priority-{{task.id}}" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                    <select id="priority-{{task.id}}" class="border-2 border-white dark:border-gray-700 focus:outline-none focus:border-2 focus:border-cyan-300 p-1 dark:bg-gray-700"
                         [ngModel]="task.priority"
                         #taskPriority="ngModel"
                         (ngModelChange)="updatePriority(task, $event)">
@@ -54,7 +54,7 @@
 
                 <fieldset>
                     <label for="status-{{task.id}}" class="mr-2 font-medium">Status:</label>
-                    <select id="status-{{task.id}}" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                    <select id="status-{{task.id}}" class="border-2 border-white dark:border-gray-700 focus:outline-none focus:border-2 focus:border-cyan-300 p-1 dark:bg-gray-700"
                         [ngModel]="task.status"
                         #taskStatus="ngModel"
                         (ngModelChange)="updateStatus(task, $event)">
@@ -78,7 +78,7 @@
 </h2>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-500">
     @for (task of finishedTasks; track task.id) {
-        <div class="bg-white shadow-md p-8">
+        <div class="bg-white dark:bg-gray-700 shadow-md p-8">
 
             <div class="flex justify-between">
                 <div>#{{ task.id }}</div>
@@ -100,7 +100,7 @@
                     <p>Priority: {{ task.priority }}</p>
                     <fieldset>
                     <label for="done-status-{{task.id}}" class="mr-2 font-medium">Status:</label>
-                    <select id="done-status-{{task.id}}" class="border-2 border-white focus:outline-none focus:border-2 focus:border-cyan-300 p-1"
+                    <select id="done-status-{{task.id}}" class="border-2 border-white dark:border-gray-700  focus:outline-none focus:border-2 focus:border-cyan-300 p-1 dark:bg-gray-700"
                         [ngModel]="task.status"
                         #taskStatus="ngModel"
                         (ngModelChange)="updateStatus(task, $event)">
